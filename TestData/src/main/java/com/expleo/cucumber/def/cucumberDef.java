@@ -1,6 +1,7 @@
 package com.expleo.cucumber.def;
 
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -39,12 +40,25 @@ String chromedriver="C:\\Users\\dhivya\\Downloads"
 		
 System.out.println(table.toString());
 		
-		List<String> dataList = table.asList(String.class);
+		//List<String> dataList = table.asList(String.class);
+List<Map<String,String>>list=table.asMaps(String.class, String.class);
+
+for(int i=0;i<list.size();i++) {
 		
-		for(String str : dataList){
-			System.out.println(str);
-		}
+		//for(String str : dataList){
+			//System.out.println(str);
+		//}
+		
+		driver.findElement(By.xpath("//*[contains(@name,'UserName')]")).sendKeys(list.get(i).get("Username"));
+		
+		driver.findElement(By.xpath("//*[contains(@name,'Password')]")).sendKeys(list.get(i).get("Password"));
+		
+		driver.findElement(By.xpath("//*[contains(@type,'submit')]")).click();
 	   
+	}
+
+driver.quit();
+	
 	}
 
 
